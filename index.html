@@ -10,6 +10,7 @@
 <meta property="og:description" content="Where your beauty finds its light.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='92' fill='%235a0d18' stroke='%23d9b46a' stroke-width='8'/%3E%3Ctext x='100' y='118' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='80' fill='%23f6e0a8'%3ENR%3C/text%3E%3C/svg%3E">
 <style>html,body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Jost:wght@300;400;500&family=Aref+Ruqaa:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500&display=swap">
 <style>
 /* Layout: a dark, cinematic scroll film. Living ink canvas behind everything; each chapter is a pinned scene
@@ -330,6 +331,23 @@ body.ready .wa{transform:none}
 :root[dir="rtl"] .wa{right:auto;left:calc(20px + env(safe-area-inset-left,0px))}
 .wa svg{width:28px;height:28px;fill:#fff}
 
+/* photography (Unsplash License); each photo sits over its gradient and is removed if it fails to load */
+.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;filter:saturate(.92) contrast(1.06)}
+.hero-photo{position:absolute;inset:-4%;z-index:0;will-change:transform,opacity;opacity:.5}
+.hero-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 45%,rgba(15,7,8,.15),rgba(15,7,8,.85) 85%),linear-gradient(180deg,rgba(15,7,8,.55),rgba(90,10,22,.25) 50%,rgba(15,7,8,.95))}
+.hero .pin>*:not(.hero-photo){z-index:1}
+.hero .medal{z-index:3}.hero-copy{z-index:4}
+.fill .ph{inset:8%;width:84%;height:84%}
+.fill::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(142,20,38,.18),rgba(30,4,10,.2) 45%,rgba(18,3,7,.86));pointer-events:none}
+.arch.has-ph svg{display:none}
+.win-bg .ph{inset:0}
+.win-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 50% 45%,rgba(20,3,8,.35),rgba(20,3,8,.85)),linear-gradient(180deg,rgba(90,10,22,.35),rgba(15,3,6,.6))}
+.tg{overflow:hidden}
+.tg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(142,20,38,.12),transparent 40%,rgba(15,3,6,.75));pointer-events:none}
+.tg span{position:relative;z-index:2}
+.credit{font-size:.74rem;color:var(--mute)}
+.credit a{color:inherit}
+
 /* reduced motion: calm static page */
 html.static #splash,html.static .ghost,html.static .cue,html.static .mega-l,html.static #cursor,html.static .hs-meta,html.static .qdots,html.static .stage,html.static .br-pre{display:none}
 html.static body::after{animation:none}
@@ -399,6 +417,7 @@ html.static .fade{opacity:1;transform:none}
 <main>
 <section class="scene hero" id="top" data-ch="ch1">
   <div class="pin">
+    <div class="hero-photo" id="heroPhoto"></div>
     <div class="mega-l"><div class="mega-mask"><span class="ml" style="--k:0"><i style="--k:0">N</i></span><span class="ml"><i style="--k:1">O</i></span><span class="ml"><i style="--k:2">O</i></span><span class="ml"><i style="--k:3">R</i></span></div></div>
     <div class="medal" id="heroMedal">
       <div class="halo"></div>
@@ -435,7 +454,7 @@ html.static .fade{opacity:1;transform:none}
 <section class="scene bridal" id="bridal" data-ch="ch4">
   <div class="pin">
     <p class="br-pre" id="brPre" data-i="br_pre"></p>
-    <div class="win" id="win"><div class="win-bg" id="winBg"></div></div>
+    <div class="win" id="win"><div class="win-bg" id="winBg"><span id="winPh"></span></div></div>
     <div class="br-copy" id="brCopy"><span class="label" data-i="lb_bridal"></span><h2 data-i="br_h"></h2><p data-i="br_d"></p></div>
     <div class="pk" id="packs"></div>
   </div>
@@ -501,7 +520,7 @@ html.static .fade{opacity:1;transform:none}
 
 <footer class="site" id="foot">
   <div class="mega" id="mega" aria-hidden="true"><span>N</span><span>o</span><span>o</span><span>r</span></div>
-  <div class="wrap foot"><span data-i="foot"></span><button class="replay" type="button" id="replay" data-i="replay"></button><span class="ltr">Amman · Jordan</span></div>
+  <div class="wrap foot"><span data-i="foot"></span><button class="replay" type="button" id="replay" data-i="replay"></button><span class="credit">Photography: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></span><span class="ltr">Amman · Jordan</span></div>
 </footer>
 
 <a class="wa" href="https://wa.me/" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
@@ -520,8 +539,8 @@ en:{ticker:"Bridal season is open · Book your trial on WhatsApp · Open Tuesday
  br_pre:"For the bride",lb_bridal:"Bridal",br_h:"Your <em>night</em>, in full light",br_d:"From the first trial to the last photo, one team takes care of your look for the whole day.",
  packs:[["Essential","Classic",180,["Bridal makeup","Hair styling","Lash application"]],["Most chosen","Rouge",320,["Everything in Classic","Trial session beforehand","Bridal glow facial","Manicure & pedicure"]],["Complete","Royal Noor",550,["Everything in Rouge","Makeup for two guests","On-site touch-ups","Henna-night look"]]],
  lb_why:"Why Noor Rouge",why_h:"Care you can <em>feel</em>",why:[["Certified experts","Trained and certified in skin, hair and makeup."],["Genuine products","Trusted brands, matched to your skin and hair."],["Strict hygiene","Sterilised tools for every client, every time."],["Full privacy","A calm, women-only space with private rooms."]],
- lb_gal:"Gallery",gal_h:"Inside <em>the lounge</em>",gal_d:"Keep scrolling to walk through the rooms.",tun:["The lounge","Bridal","Nails","Hair colour","Skin","Makeup","Lashes","Before & after","The lounge","Brows","Bridal","Nails"],
- ig_t:"Your seat is waiting",tun_cta:"Book your visit",gal_note:"Photos of the lounge and the team's work will fill these frames.",
+ lb_gal:"Gallery",gal_h:"Inside <em>the lounge</em>",gal_d:"Keep scrolling to walk through the rooms.",tun:["The lounge","Bridal","Nails","Hair","Skin","Makeup","Roses","Our products","Bridal","Lipstick","Noor","Styling"],
+ ig_t:"Your seat is waiting",tun_cta:"Book your visit",gal_note:"Free-licensed photography for this concept. Your own lounge photos can replace any frame.",
  lb_words:"Kind words",quotes:["The facial was wonderful, and the room so calm I nearly fell asleep.","My bridal makeup lasted all night and looked even better in photos.","A beautiful lounge, a lovely team, and booking on WhatsApp takes a minute."],rv_note:"Sample reviews showing the layout, to be replaced with real client reviews.",
  lb_visit:"Visit us",vis_h:"Visit & <em>book</em>",chip:"Closed on Mondays",days:["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday"],open:"10:00 – 20:00",closed:"Closed",closedFrom:"Closed",today:"Today",
  h_note:"Opening times are indicative for this preview.",i_phone:"Phone & WhatsApp",copy:"Copy",copied:"Copied",i_loc:"Amman, Jordan · address and map to be added",
@@ -541,8 +560,8 @@ ar:{ticker:"موسم العرائس بدأ · احجزي جلسة التجربة
  br_pre:"للعروس",lb_bridal:"العرائس",br_h:"ليلتكِ <em>بكامل</em> نورها",br_d:"من جلسة التجربة الأولى حتى آخر صورة، فريق واحد يهتم بإطلالتكِ طوال اليوم.",
  packs:[["الأساسية","كلاسيك",180,["مكياج عروس","تسريحة شعر","تركيب رموش"]],["الأكثر طلباً","روج",320,["كل ما في كلاسيك","جلسة تجربة مسبقة","جلسة نضارة للبشرة","مانيكير وبديكير"]],["المتكاملة","نور الملكية",550,["كل ما في روج","مكياج لضيفتين","تعديلات في مكان الحفل","إطلالة ليلة الحناء"]]],
  lb_why:"لماذا نور روج",why_h:"عناية <em>تشعرين</em> بها",why:[["خبيرات معتمدات","فريق بشهادات في البشرة والشعر والمكياج."],["منتجات أصلية","علامات موثوقة تناسب بشرتكِ وشعركِ."],["تعقيم صارم","أدوات معقّمة لكل عميلة وفي كل مرة."],["خصوصية تامة","مساحة نسائية هادئة مع غرف خاصة."]],
- lb_gal:"المعرض",gal_h:"داخل <em>الصالون</em>",gal_d:"واصلي التمرير لتتجوّلي بين الغرف.",tun:["الصالون","عرائس","أظافر","صبغات","بشرة","مكياج","رموش","قبل وبعد","الصالون","حواجب","عرائس","أظافر"],
- ig_t:"مقعدكِ بانتظاركِ",tun_cta:"احجزي زيارتكِ",gal_note:"ستملأ صور الصالون وأعمال الفريق هذه الإطارات.",
+ lb_gal:"المعرض",gal_h:"داخل <em>الصالون</em>",gal_d:"واصلي التمرير لتتجوّلي بين الغرف.",tun:["الصالون","عرائس","أظافر","الشعر","بشرة","مكياج","ورود","منتجاتنا","عرائس","أحمر شفاه","نور","تصفيف"],
+ ig_t:"مقعدكِ بانتظاركِ",tun_cta:"احجزي زيارتكِ",gal_note:"صور مجانية الترخيص لهذا التصميم، ويمكن استبدال أي إطار بصور الصالون الحقيقية.",
  lb_words:"آراء العميلات",quotes:["جلسة البشرة كانت رائعة، والغرفة هادئة لدرجة إني كدت أنام.","مكياج العرس ثبت طول الليل، وطلع بالصور أحلى كمان.","مكان جميل وفريق لطيف، والحجز عبر الواتساب بدقيقة."],rv_note:"آراء تجريبية توضّح الشكل، وتُستبدل بآراء العميلات الحقيقية.",
  lb_visit:"زورينا",vis_h:"الزيارة <em>والحجز</em>",chip:"الاثنين عطلة أسبوعية",days:["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"],open:"١٠:٠٠ ص – ٨:٠٠ م",closed:"عطلة",closedFrom:"عطلة",today:"اليوم",
  h_note:"أوقات الدوام تقديرية لغرض العرض.",i_phone:"الهاتف وواتساب",copy:"نسخ",copied:"تم النسخ",i_loc:"عمّان، الأردن · يُضاف العنوان والخريطة",
@@ -561,6 +580,13 @@ const MENU=[
 ];
 const ICONS=['<path d="M7 4c3 6 3 10 0 16M17 4c-3 6-3 10 0 16M9 8h6M9 16h6"/>','<circle cx="12" cy="12" r="7"/><path d="M9.5 15c1.4 1 3.6 1 5 0"/>','<path d="M9 21V10a3 3 0 0 1 6 0v11M9 14h6"/>','<path d="M4 12c3-5 13-5 16 0-3 5-13 5-16 0Z"/><circle cx="12" cy="12" r="2.4"/>','<path d="M12 3c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10Z"/>'];
 const FILLS=['radial-gradient(70% 60% at 30% 25%,#f7d9c4,transparent 60%),linear-gradient(170deg,#d94a5c,#8e1426 60%,#2a0b10)','radial-gradient(60% 60% at 70% 30%,#fff1e0,transparent 55%),linear-gradient(190deg,#f0c7b4,#c4505e 60%,#4a0d17)','radial-gradient(60% 50% at 40% 35%,#fbe7b5,transparent 60%),linear-gradient(160deg,#e3bf78,#a2702f 60%,#3a1a0c)','radial-gradient(70% 60% at 60% 30%,#e86a78,transparent 60%),linear-gradient(200deg,#b3182f,#5a0d18 65%,#1a0508)','radial-gradient(60% 60% at 35% 30%,#f8e6da,transparent 60%),linear-gradient(170deg,#e9c3b3,#a84a52 60%,#3a0e14)'];
+const PH={
+ hero:'1629694242280-20637c63285b',
+ svc:['1580618672591-eb180b1a973f','1570172619644-dfd03ed5d881','1748163432725-454f46f68340','1512496015851-a90fb38ba796','1544717304-a2db4a7b16ee'],
+ bridal:'1610173827043-9db50e0d8ef9',
+ tun:['1781450090585-1a511b7066d9','1600685890506-593fdf55949b','1519014816548-bf5fe059798b','1634449571010-02389ed0f9b0','1616394584738-fc6e612e71b9','1626895872564-b691b6877b83','1588735451451-e97661938cc1','1760862652442-e8ff7ebdd2f8','1610047614301-13c63f00c032','1586495777744-4413f21062fa','1518931479438-62470470be9a','1560869713-7d0a29430803']
+};
+const imgTag=(id,w,eager,onl)=>`<img class="ph" src="https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80" alt="" ${eager?'':'loading="lazy"'} decoding="async" onerror="this.remove()" ${onl?`onload="${onl}"`:''}>`;
 const EMB=`<svg class="emblem" viewBox="0 0 200 200" aria-hidden="true">
 <circle cx="100" cy="100" r="92" fill="url(#nrCore)"/>
 <circle cx="100" cy="100" r="92" fill="none" stroke="url(#nrGold)" stroke-width="1.8"/>
@@ -572,6 +598,7 @@ const EMB=`<svg class="emblem" viewBox="0 0 200 200" aria-hidden="true">
 </svg>`;
 function mountEmblems(){document.querySelectorAll('.emb-slot').forEach(s=>{if(s.dataset.done)return;s.dataset.done=1;s.insertAdjacentHTML('afterend',s.classList.contains('mini')?EMB.replace('class="emblem"','class="emblem mini"'):EMB)})}
 mountEmblems();
+document.getElementById('heroPhoto').innerHTML=imgTag(PH.hero,2000,true);document.getElementById('winPh').outerHTML=imgTag(PH.bridal,1800,false);
 
 const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const html=document.documentElement;
@@ -601,13 +628,13 @@ function render(){
   const n=$('f-name');if(n.value==="Sara Ahmad"||n.value==="سارة أحمد")n.value=lang==="en"?"Sara Ahmad":"سارة أحمد";
   // services chapters
   $('track').innerHTML=`<div class="chap intro"><span class="label">${t.lb_menu}</span><h2 class="split">${t.svc_h}</h2><p>${t.svc_d}</p><p class="note">${t.svc_note}</p></div>`+
-    MENU.map((c,i)=>`<div class="chap"><div class="vis"><div class="arch"><div class="fill" style="background:${FILLS[i]}"></div><svg viewBox="0 0 24 24" fill="none" stroke="#fff6ee" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round">${ICONS[i]}</svg></div><h3 class="cname">${lang==="en"?c[0]:c[1]}</h3></div>
+    MENU.map((c,i)=>`<div class="chap"><div class="vis"><div class="arch"><div class="fill" style="background:${FILLS[i]}">${imgTag(PH.svc[i],900,false,"this.closest('.arch').classList.add('has-ph')")}</div><svg viewBox="0 0 24 24" fill="none" stroke="#fff6ee" stroke-width=".7" stroke-linecap="round" stroke-linejoin="round">${ICONS[i]}</svg></div><h3 class="cname">${lang==="en"?c[0]:c[1]}</h3></div>
       <div class="menu"><h3 class="cname m" aria-hidden="true">${lang==="en"?c[0]:c[1]}</h3><span class="idx">0${i+1} / 0${MENU.length}</span><p class="tag">${t.tags[i]}</p>${c[2].map(it=>`<div class="mrow"><div><b>${it[A()]}</b><small>${it[A()+1]}</small></div><span class="p"><i>${t.from}</i>${it[4]}<i>${t.cur}</i></span></div>`).join('')}</div></div>`).join('');
   chapEls=$$('.chap').map(el=>({el,name:el.querySelector('.vis .cname'),nameM:el.querySelector('.cname.m'),arch:el.querySelector('.arch'),fill:el.querySelector('.fill'),rows:$$('.mrow,.idx,.tag',el),intro:el.classList.contains('intro')}));
   $('packs').innerHTML=t.packs.map((p,i)=>`<div class="pack${i===1?' star':''}"><span class="lbl">${p[0]}</span><h3>${p[1]}</h3><span class="amt"><i>${t.from}</i>${p[2]}<i>${t.cur}</i></span><ul>${p[3].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('');
   $('why').innerHTML=t.why.map((w,i)=>`<div class="wrow fade" style="--d:${i*.08}s"><h3>${w[0]}</h3><p>${w[1]}</p></div>`).join('');
   // tunnel
-  $('world').innerHTML=t.tun.map((l,i)=>`<div class="tg" style="background:${FILLS[i%5]}"><span>${l}</span></div>`).join('');
+  $('world').innerHTML=t.tun.map((l,i)=>`<div class="tg" style="background:${FILLS[i%5]}">${imgTag(PH.tun[i],700)}<span>${l}</span></div>`).join('');
   tunItems=$$('.tg').map((el,i)=>({el,x:(i%2?1:-1)*(15+((i*37)%17)),y:((i*53)%26)-13,z:-i*560-200}));
   // quotes
   $('qwrap').innerHTML=t.quotes.map(q=>`<p class="q">“${q}”</p>`).join('');
@@ -662,6 +689,7 @@ scene($('top'),()=>pinP($('top')),p=>{
   const l=ease(clamp((p-.46)/.2)),c=ease(clamp((p-.54)/.2));
   $('heroLead').style.cssText=`opacity:${l};transform:translateY(${(1-l)*36}px)`;
   $('heroCta').style.cssText=`opacity:${c};transform:translateY(${(1-c)*36}px);pointer-events:${c>.5?'auto':'none'}`;
+  const hp=$('heroPhoto');if(hp)hp.style.cssText=`transform:scale(${1.06+p*.28}) translateY(${p*-6}vh);opacity:${.5-.25*clamp(p/.6)}`;
   const out=ease(clamp((p-.86)/.14));
   document.querySelector('.hero .hero-copy').style.transform=`translateY(${-out*6}vh)`;
 });
